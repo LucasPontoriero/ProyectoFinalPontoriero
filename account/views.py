@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
 from account.forms import UserRegisterForm
+from account.models import Avatar
 
 def login_account(request):
     if request.method == 'POST':
@@ -43,14 +44,22 @@ def editar_usuario(request):
 
     user=request.user
     if request.method=="POST":
-        form=UserRegisterForm(request.POST)
+        form=UserRegisterForm(request.POST, request.FILES)
         
         if form.is_valid():
             informacion=form.cleaned_data
             user.username=informacion["username"]
             user.email=informacion["email"]
             user.is_staff=informacion["is_staff"]
-            user.save
+
+            try:
+                user.avatar.imagen=informacion["imagen"]
+            except:
+                avatar=Avatar(user=user, imagen=informacion["imagen"])
+                avatar.save()
+            
+
+            user.save()
             return redirect("accountLogin")
         
         

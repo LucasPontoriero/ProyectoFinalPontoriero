@@ -1,6 +1,6 @@
 from django.db import models
 
-class servicio(models.Model):
+class servicios(models.Model):
     titulo=models.CharField(max_length=40)
     contenido=models.CharField(max_length=300)
     imagen=models.ImageField(upload_to='servicio')

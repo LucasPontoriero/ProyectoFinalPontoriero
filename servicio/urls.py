@@ -1,10 +1,9 @@
 from django.urls import path
-from servicio.views import servicios
-
+from servicio.views import servicio
 
 
 urlpatterns = [
-    path('', servicios, name="Servicio"),
+    path('', servicio, name="Servicio"),
     
 ]
 
