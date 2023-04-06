@@ -1,13 +1,24 @@
 from django.shortcuts import render, redirect
-from .forms import Formulario
+from .models import Post
+from .forms import CommentForm
 
 def contacto(request):
-    formulario_contacto=Formulario()
-    if request.method=="POST":
-        formulario_contacto=Formulario(data= request.POST)
-        if formulario_contacto.is_valid():
-            nombre=request.POST.get("nombre")
-            email=request.POST.get("email")
-            contenido=request.POST.get("contenido")
-            return redirect('Contacto')
-    return render(request, "contacto/contacto.html", {'miFormulario': formulario_contacto})
+    post = Post.objects.all()
+    return render(request, 'contacto/contacto.html', {'post': post})
+
+def post_detail(request, post_id):
+    post=Post.objects.get(id=post_id)
+
+    comments=post.comments.filter(active=True)
+
+    if request.method == 'POST':
+        form=CommentForm(request.POST)
+
+        if form.is_valid():
+            new_form=form.save(commit=False)
+            new_form.post= post 
+            new_form.save()
+    else:
+        form=CommentForm
+
+    return render(request, 'contacto/contacto/post_detail.html', {'post':post, 'comments': comments, 'form': form})

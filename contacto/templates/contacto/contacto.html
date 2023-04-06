@@ -4,24 +4,22 @@
 
 {% block contenido %}
 
-<div class="contenedorFormulario">
-
-    <form action="{% url 'Contacto' %}" method="POST">
-
-        {% if "valido" in request.GET %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post list</title>
+</head>
+<body>
     
-        <p>Se ha enviado la informacion exitosamente</p>
+</body>
 
-    {% endif %}
-    </form>
-    
-    <form action="" method="POST" style="text-align: center;">
-        {% csrf_token %}
-         <table style="color:aqua; margin: 20px auto;">{{miFormulario.as_table}} </table>
-         <input type="submit" value="Enviar" style="width: 150px;">
+    {% for publicacion in post%}
+       <a href="{% url 'post_detail' publicacion.id %}" role="button">Contactarse</a> <h2 style="color:aliceblue;"> {{publicacion.title }}</h2></a>    
 
-    </form>
+    {% endfor %}
 
-</div>
-<p style="color:chartreuse;">{{request.POST}}></p>
+</html>
+
 {% endblock %}

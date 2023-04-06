@@ -1,0 +1,33 @@
+{% extends "App/base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+
+<h1 style="color:aliceblue">{{post.title}}</h1>
+<p style="color:aliceblue" >{{post.content}}</p>
+<p style="color:aliceblue">{{post.created_on}}</p>
+
+
+<div>
+<form style="color:aliceblue" method="post">
+    {% csrf_token %}
+
+    {{form.as_p}}
+    <input type="submit" name="Enviar" value="Comentar">
+
+
+</form>
+
+
+
+{% for comentario in comments %}
+<div style="margin: 50px;">
+<p style="color:aliceblue"> {{comentario.name}} {{comentario.created_on}} <p style="font-family: courier; color: aliceblue;">{{comentario.content}}</p></p>
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}

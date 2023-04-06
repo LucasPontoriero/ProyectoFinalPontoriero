@@ -27,12 +27,12 @@ def login_account(request):
 
 def register_account(request):
     if request.method == "POST":
-        form = UserRegisterForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("accountLogin")
     else:
-        form = UserRegisterForm()
+        form = UserCreationForm()
     context = {
         "form": form,
         "titulo":"Registrar usuario",

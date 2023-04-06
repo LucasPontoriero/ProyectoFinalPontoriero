@@ -1,6 +1,7 @@
-from django import forms
+from django.forms import ModelForm
+from .models import Comment
 
-class Formulario(forms.Form):
-    nombre=forms.CharField(label="Nombre", required=True)
-    email=forms.CharField(label="Email", required=True)
-    contenido=forms.CharField(label="Contenido", widget=forms.Textarea ,required=True)
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields =('name', 'email', 'content', 'active')
